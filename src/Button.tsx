@@ -1,16 +1,16 @@
 import React, {ButtonHTMLAttributes} from 'react';
 
-/*type ButtonPropsType = {
+/*type ButtonsPropsType = {
     title: string
     onClick: () => void
 }*/
 
-type ButtonPropsType = ButtonHTMLAttributes<HTMLButtonElement>
+type ButtonsPropsType = ButtonHTMLAttributes<HTMLButtonElement>
 
-export const Button = ({title, onClick}: ButtonPropsType) => {
+export const Button = ({title, onClick}: ButtonsPropsType) => {
     return (
         <button onClick={onClick}>{title}</button>
     );
 };
 
-//export default Button;
+//export default Buttons;

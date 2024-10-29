@@ -182,7 +182,7 @@ function App() {
     return (
         <div className="App">
             <div>
-                <Button title={'Remove Todolists'} onClick={removeAllTodolists}/>
+                <Button title={'Remove All Todolists'} onClick={removeAllTodolists}/>
             </div>
 
             {
@@ -197,8 +197,7 @@ function App() {
                         tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
                     }
 
-                    return (
-                        <Todolist
+                    return <Todolist
                         key={index}
                         id={index}
                         title={tl.title}
@@ -211,7 +210,7 @@ function App() {
                         filter={tl.filter}
                         removeTodolist={removeTodolist}
                         removeAllTasksInOneTodo={removeAllTasksInOneTodo}
-                    />)
+                    />
                 })
             }
 
