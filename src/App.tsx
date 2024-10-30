@@ -48,11 +48,14 @@ function App() {
             </Modal>*/}
 
             <Modal>
-                <p>Confidient Information</p>
+                <p>Confident Information</p>
                 <input type="email" placeholder={'email'}/>
                 <input type="pass" placeholder={'pass'}/>
                 <input type="pass" placeholder={'pass'}/>
-                <input type="checkbox"/>
+                <label>
+                    <input type="checkbox"/>
+                    I agree
+                </label>
                 <button>send</button>
             </Modal>
 
