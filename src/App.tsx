@@ -1,67 +1,66 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Modal} from './components/modal/Modal';
-import {Button} from './components/Button';
-import s from './components/Button.module.css'
-import {Croses} from './components/Croses';
+import {Country} from "./Country";
+import {v1} from "uuid";
+
+export type BanknotsType = 'USD' | 'RUB' | 'ALL' // создадим типы для banknotes -он может быть 'DOLLARS', 'RUBLS' или 'All'
+export type MoneyType = {
+    banknote: BanknotsType
+    nominal: number// не ленимся, убираем заглушку, и пишем правильный тип)
+    id: string// ложку за Димыча, за...
+}
+
+let defaultMoney: MoneyType[] = [  // типизируем
+    {banknote: 'USD', nominal: 100, id: v1()},
+    {banknote: 'USD', nominal: 100, id: v1()},
+    {banknote: 'RUB', nominal: 100, id: v1()},
+    {banknote: 'USD', nominal: 100, id: v1()},
+    {banknote: 'USD', nominal: 100, id: v1()},
+    {banknote: 'RUB', nominal: 100, id: v1()},
+    {banknote: 'USD', nominal: 100, id: v1()},
+    {banknote: 'RUB', nominal: 100, id: v1()},
+]
+
+
+export const moneyFilter = (money: MoneyType[], filter: BanknotsType): MoneyType[] => {
+    if (filter === 'ALL') return money
+    return money.filter(el => el.banknote === filter)
+    //если пришел filter со значением 'All', то возвращаем все банкноты
+    //return money.filter... ну да, придется фильтровать
+}
 
 
 function App() {
+    // убираем заглушки в типизации и вставляем в качестве инициализационного значения defaultMoney
+    const [money, setMoney] = useState<MoneyType[]>(defaultMoney)
+    const [filterValue, setFilterValue] = useState<BanknotsType>('ALL')   // по умолчанию указываем все банкноты
+    console.log(filterValue)
 
-    const croses = [
-        {id: 1, model: 'ADIDAS', size: 'XXX'},
-        {id: 2, model: 'ABIBAS', size: 'YYY'},
-        {id: 3, model: 'PUMA', size: 'ZZZ'}
-    ]
+    // а вот сейчас притормаживаем. И вдумчиво: константа filteredMoney получает результат функции moneyFilter
+    // в функцию передаем деньги и фильтр, по которому ихбудем выдавать(ретёрнуть)
+    const filteredMoney = moneyFilter(money, filterValue)
+    console.log(filteredMoney)
+
+    const addMoney = (banknote: BanknotsType) => {
+        // Добавление денег сделаем в последнюю очередь, после настройки фильтров и отрисовки денег
+    }
+
+    const removeMoney = (banknote: BanknotsType) => {
+        // Снятие денег сделаем в последнюю очередь, после настройки фильтров и отрисовки денег
+       // const index = money.findIndex
+       //  if (index !== -1) {
+       //      setMoney(money.filter((el, i) => ...));
+       //  }
+    }
 
     return (
-        <div>
-            {/*<Button onClick={() => {}}
-                    backGround={'red'}
-                    className={s.redForSuperButton}
-            >Red Button
-            </Button>
-            <Button onClick={() => {}}
-                    backGround={'blue'}
-                    className={s.blueForSuperButton}
-            >Blue Button
-            </Button>*/}
-
-            {/*            <Button onClick={() => {}} color={'red'}>Red Button</Button>
-            <Button onClick={() => {}} color={'secondary'}>Secondary Button</Button>
-            <Button onClick={() => {}}>Default Button</Button>
-            <Button onClick={() => {}} disabled>Disabled Button</Button>*/}
-
-            {/*<Croses croses={croses}>lalala</Croses>
-            <Croses croses={croses}><input type="text"/></Croses>
-            <Croses croses={croses}>
-                <Button onClick={() => {}} color={'red'}>Red Button</Button>
-                <Button onClick={() => {}} color={'secondary'}>Secondary Button</Button>
-                <Button onClick={() => {}}>Default Button</Button>
-                <Button onClick={() => {}} disabled>Disabled Button</Button>
-            </Croses>*/}
-
-{/*            <Modal>
-                <input type="email" placeholder={'email'}/>
-                <input type="password" placeholder={'pass'}/>
-                <button>send</button>
-            </Modal>*/}
-
-            <Modal>
-                <p>Confident Information</p>
-                <input type="email" placeholder={'email'}/>
-                <input type="pass" placeholder={'pass'}/>
-                <input type="pass" placeholder={'pass'}/>
-                <label>
-                    <input type="checkbox"/>
-                    I agree
-                </label>
-                <button>send</button>
-            </Modal>
-
+        <div className="App">
+            <Country
+                data={filteredMoney}   //отрисовать будем деньги после фильтрации
+                setFilterValue={setFilterValue}  //useState передаем? Так можно было?!
+            />
         </div>
     );
 }
-
 
 export default App;
